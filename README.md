@@ -14,6 +14,8 @@ This repo focuses on the high level programming which mainly used for user/actor
 - Vision
 - User Information center
 
+![alt text](img/high_level_diagram.png)
+
 ### Listening (*)
 
 This feature has to be able to "wake up the robot"/command spotting, find the source of the sound, and then transcribe the audio.
