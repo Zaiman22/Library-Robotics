@@ -1,0 +1,18 @@
+services:
+  ros2_environment:
+    container_name: ros_environment
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: host
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - SDL_VIDEODRIVER=x11
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/home/ros/.Xauthority:rw
+      - ./src:/home/ros/ws/src
+    stdin_open: true
+    tty: true

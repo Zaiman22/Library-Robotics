@@ -23,6 +23,7 @@ This feature has to be able to "wake up the robot"/command spotting, find the so
 Thus the target in this section are:
 
 - Keyword spotting (low energy voice detection)
+  - [edge device KWS by ARM](https://github.com/ARM-software/ML-KWS-for-MCU)
 - TDOA/sound source localization
 - Speech to text (STT) 
 
