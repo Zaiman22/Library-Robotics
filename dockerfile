@@ -10,10 +10,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev \
     python3-pip \
     python3-pybind11 \
+    curl \
     && rm -rf /var/lib/apt/lists/*
-
-COPY requirements.txt /tmp/requirements.txt
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+    
+    COPY requirements.txt /tmp/requirements.txt
+    RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+    
+    RUN curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+    RUN sudo apt-get install -y nodejs
 
 # Fixed container user (DO NOT map host user)
 ARG UNAME=ros

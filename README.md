@@ -23,9 +23,15 @@ This feature has to be able to "wake up the robot"/command spotting, find the so
 Thus the target in this section are:
 
 - Keyword spotting (low energy voice detection)
+  - To be discused:
   - [edge device KWS by ARM](https://github.com/ARM-software/ML-KWS-for-MCU)
+  - [Edge impulse KWS](https://docs.edgeimpulse.com/datasets/audio/keyword-spotting)
+  - [Edge impulse Jetson](https://docs.edgeimpulse.com/hardware/boards/nvidia-jetson)
+  - [Edge impulse on python](https://docs.edgeimpulse.com/tools/libraries/sdks/inference/linux/python)
 - TDOA/sound source localization
-- Speech to text (STT) 
+- Speech to text (STT)
+  - [indonesian-whisperer](https://github.com/cahya-wirawan/indonesian-whisperer)
+  - [Open AI Whisper](https://github.com/openai/whisper)
 
 ### Vision (*)
 
@@ -44,7 +50,9 @@ Thus the target in this section are:
 
 - LLM for book recomendation and give information about book
 - user database
+- Book Database
 - Good UI
+  - [Kiosk mode chrome/chromium (like many used in other industry for simple UI)](https://dietpi.com/forum/t/navigate-chromium-kiosk-to-new-url-from-command-line/20690)
 
 ## System Integration (*)
 
