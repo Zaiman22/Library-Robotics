@@ -4,9 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        UID: ${HOST_UID}
+        GID: ${HOST_GID}
     network_mode: host
     privileged: true
-    user: "${UID}:${GID}"
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1

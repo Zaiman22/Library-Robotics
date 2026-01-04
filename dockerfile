@@ -39,4 +39,4 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
 WORKDIR /home/${UNAME}/ws
 
 ENTRYPOINT []
-CMD ["bash", "-c", "sleep infinity"]
+CMD ["bash"]

@@ -63,7 +63,7 @@ This system uses the ROS2 environment to comunicate between node and thread opti
 To make installtion over many robot easier, a bash file for jetson has been made. To install this program, run the following code in the terminal:
 
 ```bash
-sudo bash ./install_app.sh
+bash ./install_app.sh
 ```
 
 ### Run the program (*)
@@ -72,5 +72,5 @@ sudo bash ./install_app.sh
 To rerun the program upon startup or failure, a bash file also has been made. To restart the code, run the following code in the terminal:
 
 ```bash
-sudo bash ./start_app.sh
+bash ./start_app.sh
 ```

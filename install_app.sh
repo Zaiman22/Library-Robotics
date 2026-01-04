@@ -36,8 +36,9 @@ choose_gpu() {
 
 create_docker() {
 
-    export GID=$(id -g)
-    export UID=$(id -u)
+    export HOST_UID=$(id -u)
+    export HOST_GID=$(id -g)
+    echo "UID=$HOST_UID GID=$HOST_GID"
 
     echo "Docker build has started. This may take some time..."
     if [ "$1" == "true" ]; then
