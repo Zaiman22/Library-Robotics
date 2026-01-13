@@ -2,6 +2,24 @@
 
 This repo contains the high level code for user experience and interaction
 
+January Target:
+- [ ]  Robot
+  - [ ]  KWS
+    - [ ]  Labeling
+  - [ ]  FTP
+  - [ ]  STT
+  - [ ]  Book database API
+  - [ ]  TTS Indonesia
+  - [ ]  UI
+    - [x]  Homepage
+    - [x]  Select
+    - [ ]  Book read
+    - [ ]  Book database
+- [ ]  Base
+  - [ ]  Database
+  - [ ]  FTP server
+  - [ ]  docker compose
+
 > **Notes:** header with the * (asterisk symbol) means that section is still in progress
 
 ## System description

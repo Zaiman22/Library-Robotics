@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router/dom";
 
 
 import HomePage from './pages/homepage';
+import SelectPage from "./pages/selectpage";
 
 import './index.css'
 
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <HomePage />,
   },
+  {
+    path: "/select",
+    element: <SelectPage />,
+  }
 ]);
 
 const root = document.getElementById("root")!;
