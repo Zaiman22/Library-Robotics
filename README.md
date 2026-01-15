@@ -16,9 +16,9 @@ January Target:
     - [ ]  Book read
     - [ ]  Book database
 - [ ]  Base
-  - [ ]  Database
+  - [x]  Database
   - [ ]  FTP server
-  - [ ]  docker compose
+  - [x]  docker compose
 
 > **Notes:** header with the * (asterisk symbol) means that section is still in progress
 
@@ -31,7 +31,7 @@ This repo focuses on the high level programming which mainly used for user/actor
 - Listening
 - Vision
 - User Information center
-
+![alt text](image.png)
 ![alt text](img/high_level_diagram.png)
 
 ### Listening (*)

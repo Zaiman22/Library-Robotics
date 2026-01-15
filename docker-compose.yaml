@@ -18,6 +18,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${HOME}/.Xauthority:/home/ros/.Xauthority:rw
       - ./src:/home/ros/ws/src
+    ports:
+      - "5173:5173"
     stdin_open: true
     tty: true
     networks:
@@ -46,6 +48,7 @@ services:
   db:
     image: pgvector/pgvector:pg16
     container_name: library_db
+    user: "${HOST_UID}:${HOST_GID}"
     environment:
       POSTGRES_DB: library
       POSTGRES_USER: admin
