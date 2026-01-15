@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
     
-    COPY requirements.txt /tmp/requirements.txt
-    RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+    # COPY requirements.txt /tmp/requirements.txt
+    # RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
     
     RUN curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
     RUN sudo apt-get install -y nodejs

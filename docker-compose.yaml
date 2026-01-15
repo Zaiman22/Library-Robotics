@@ -1,21 +1,65 @@
+version: "3.9"
+
 services:
+
   ros2_environment:
     container_name: ros_environment
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ros.dockerfile
       args:
         UID: ${HOST_UID}
         GID: ${HOST_GID}
-    network_mode: host
-    privileged: true
     environment:
-      - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
-      - SDL_VIDEODRIVER=x11
+      DISPLAY: ${DISPLAY}
+      QT_X11_NO_MITSHM: 1
+      SDL_VIDEODRIVER: x11
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ~/.Xauthority:/home/ros/.Xauthority:rw
+      - ${HOME}/.Xauthority:/home/ros/.Xauthority:rw
       - ./src:/home/ros/ws/src
     stdin_open: true
     tty: true
+    networks:
+      - app_net
+
+  server_environment:
+    container_name: server_environment
+    build:
+      context: .
+      dockerfile: server.dockerfile
+      args:
+        UID: ${HOST_UID}
+        GID: ${HOST_GID}
+    environment:
+      DATABASE_URL: postgresql+psycopg2://admin:admin123@db:5432/library
+    volumes:
+      - ./src/backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - app_net
+
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: library_db
+    environment:
+      POSTGRES_DB: library
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    volumes:
+      - ./src/postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_net
+
+volumes:
+  postgres_data:
+
+networks:
+  app_net:
+    driver: bridge
