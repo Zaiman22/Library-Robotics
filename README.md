@@ -15,9 +15,11 @@ January Target:
     - [x]  Select
     - [ ]  Book read
     - [ ]  Book database
+    - [ ]  API integration
 - [ ]  Base
   - [x]  Database
   - [ ]  FTP server
+  - [x]  API testing
   - [x]  docker compose
 
 > **Notes:** header with the * (asterisk symbol) means that section is still in progress
