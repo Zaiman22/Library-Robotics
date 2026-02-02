@@ -6,6 +6,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     git \
+    pulseaudio \
+    pulseaudio-utils \
+    libasound2-plugins \
     python3-colcon-common-extensions \
     python3-dev \
     python3-pip \
@@ -16,7 +19,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     iproute2 \
     sudo \
+    ros-humble-rosbridge-suite \
     && rm -rf /var/lib/apt/lists/*
+
+# react dependencies
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
+    apt-get install -y nodejs
+
 
 # Create user
 ARG UNAME=ros

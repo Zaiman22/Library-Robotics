@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>audio_kws</name>
+  <version>0.0.1</version>
+  <description>
+  Audio module for keyword spotting
+  TODO:
+  - Create a printing node
+  - Implement keyword spotting
+  - Send KWS prediction into node
+  </description>
+  <maintainer email="zaiman.a.purnama@gmail.com">Zaiman Purnama</maintainer>
+  <license>TODO: License declaration</license>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

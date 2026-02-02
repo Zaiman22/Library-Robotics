@@ -1,11 +1,11 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 
-package_name = 'my_package'
+package_name = 'audio_kws'
 
 setup(
     name=package_name,
-    version='0.0.0',
-    packages=find_packages(exclude=['test']),
+    version='0.0.1',
+    packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -13,10 +13,10 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='ros',
-    maintainer_email='ros@todo.todo',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    maintainer='Zaiman Purnama',
+    maintainer_email='zaiman.a.purnama@gmail.com',
+    description='audio module for keyword spoting',
+    license='Apache License 2.0',
     extras_require={
         'test': [
             'pytest',
@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'my_node = my_package.my_node:main'
+            'printer = audio_kws.print_node:main',
         ],
     },
 )

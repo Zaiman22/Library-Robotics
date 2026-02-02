@@ -2,3 +2,6 @@ numpy>=1.19,<3
 PyAudio>=0.2.11,<0.3
 six>=1.16.0,<2
 opencv-python>=4.5.1.48,<5
+sounddevice 
+soundfile
+piper-tts
