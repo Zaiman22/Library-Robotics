@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iproute2 \
     sudo \
     ros-humble-rosbridge-suite \
+    ros-humble-ament-cmake-clang-format \
     && rm -rf /var/lib/apt/lists/*
 
 # react dependencies

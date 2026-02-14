@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'printer = audio_kws.print_node:main',
+            'kws =  audio_kws.kws:main',
         ],
     },
 )

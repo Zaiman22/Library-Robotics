@@ -1,0 +1,11 @@
+<launch>
+    <node pkg="audio_kws" exec="kws" />
+
+    <node pkg="fsm_main" exec="fsm_main" />
+
+    <node pkg="audio_common" exec="audio_capturer_node">
+        <param name="channels" value="2"/>
+        <param name="rate" value="16000"/>
+        <param name="chunk" value="1024"/>
+    </node>
+</launch>

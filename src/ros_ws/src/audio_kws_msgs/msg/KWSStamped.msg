@@ -1,0 +1,2 @@
+std_msgs/Header header
+audio_kws_msgs/KWSPrediction prediction
