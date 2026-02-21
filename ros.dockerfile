@@ -1,4 +1,4 @@
-FROM ros:humble-ros-base
+FROM osrf/ros:humble-desktop-full
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -21,6 +21,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     ros-humble-rosbridge-suite \
     ros-humble-ament-cmake-clang-format \
+    ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros gazebo libgazebo-dev \
+    ros-humble-gazebo-ros2-control \
+    mesa-utils \
+    x11-apps \
     && rm -rf /var/lib/apt/lists/*
 
 # react dependencies
@@ -57,5 +61,10 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
     mkdir -p /home/${UNAME}/ws/src
 
 WORKDIR /home/${UNAME}/ws
+
+
+# Entrypoint
+COPY --chmod=755 ros_entrypoint.sh /ros_entrypoint.sh
+
 
 CMD ["bash"]
