@@ -12,8 +12,12 @@ services:
     devices:
     - /dev/snd
     - /dev/bus/usb
+    - /dev/video0
+    - /dev/video1
     group_add:
     - audio
+    - "44"
+    - video
     environment:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
       - DISPLAY=${DISPLAY}
@@ -50,6 +54,7 @@ services:
       DATABASE_URL: postgresql+psycopg2://admin:admin123@db:5432/library
     volumes:
       - ./src/backend:/app
+      - ./src/server_data:/app/server_data
     ports:
       - "8000:8000"
     depends_on:
@@ -71,6 +76,19 @@ services:
       - ./src/postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - app_net
+
+  
+  librarian_ui:
+    container_name: librarian_ui
+    image: node:20
+    working_dir: /app
+    volumes:
+      - ./src/frontend/librarian_frontend:/app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5174:5173" 
     networks:
       - app_net
 

@@ -2,18 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import RootLayout from "./ros/RootLayout";
+import ros from "./ros/ros";
 import HomePage from "./pages/homepage";
 import SelectPage from "./pages/selectpage";
+import BookTable from "./pages/book";
+import BookInfo from "./pages/bookInfo";
+import AudiobookPlayer from "./pages/audioBook";
 
 import "./index.css";
 
 const router = createBrowserRouter([
   {
-    element: <RootLayout />, 
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/select", element: <SelectPage /> },
+      { path: "/book", element: <BookTable /> },
+      { path: "/book/:id", element: <BookInfo /> },
+      { path: "/book/audio", element: <AudiobookPlayer /> },
     ],
   },
 ]);

@@ -3,3 +3,4 @@ src/ros_ws/testing
 src/ros_ws/build
 src/ros_ws/install
 src/ros_ws/log
+src/server_data

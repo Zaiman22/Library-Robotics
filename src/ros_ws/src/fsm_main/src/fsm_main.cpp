@@ -34,6 +34,8 @@ public:
 
         publisher_ =
             this->create_publisher<std_msgs::msg::String>("ui_route", 10);
+        UIKWSPublisher_ =
+            this->create_publisher<std_msgs::msg::String>("/ui/kws", 10);
 
         kws_sub_ =
             this->create_subscription<audio_kws_msgs::msg::KWSStamped>(
@@ -77,7 +79,15 @@ private:
             else if (label == "carikan_buku")
                 kws_output_ = MealyInput::CARIKAN_BUKU;
             main_fsm(kws_output_);
+            KWS_send(label);
         }
+    }
+
+    void KWS_send(const std::string &KWS_Label){
+        std_msgs::msg::String msg;
+        msg.data = KWS_Label;
+        UIKWSPublisher_->publish(msg);
+        
     }
 
     // ---------------- FSM CORE ----------------
@@ -117,6 +127,7 @@ private:
     MealyInput kws_output_;
 
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr UIKWSPublisher_;
     rclcpp::Subscription<audio_kws_msgs::msg::KWSStamped>::SharedPtr kws_sub_;
 
     size_t count_;

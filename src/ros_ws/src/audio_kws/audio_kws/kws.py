@@ -7,6 +7,8 @@ from audio_tdoa_msgs.msg import TDOAStamped
 from edge_impulse_linux.audio import AudioImpulseRunner 
 import numpy as np
 import os
+import time
+from scipy.signal import resample
 
 
 # TDOA library
@@ -58,9 +60,12 @@ class KWS(Node):
         self.audio_chunk = np.array([], dtype=np.int16)
         self.left_chunk = np.array([], dtype=np.int16)
         self.right_chunk = np.array([], dtype=np.int16)
+        self.audio_16k = np.array([], dtype=np.int16)
 
         self.sample_length = 1 # in second
         self.rate = 48000
+        self.prev_pred_time = time.time()
+        self.debounce_sec = 1.2   # seconds (adjust)
 
 
 
@@ -92,8 +97,9 @@ class KWS(Node):
         # keep last N samples only
         if len(self.audio_chunk) >= self.buffer_size:
             self.audio_chunk = self.audio_chunk[-self.buffer_size:]
-            self.left_chunk = self.audio_chunk[-self.buffer_size:]
-            self.right_chunk = self.audio_chunk[-self.buffer_size:]
+            self.left_chunk = self.left_chunk[-self.buffer_size:]
+            self.right_chunk = self.right_chunk[-self.buffer_size:]
+            self.audio_16k = resample(self.audio_chunk,16000)
 
         #debug purpose
         # print(audio)
@@ -113,18 +119,18 @@ class KWS(Node):
         return y
 
     def get_degree(self,s1,s2):
-        s1 = self.butter_bandpass_filter(s1,20,7000,self.rate)
-        s2 = self.butter_bandpass_filter(s2,20,7000,self.rate)
+        s1 = self.butter_bandpass_filter(s1,300,22000,self.rate)
+        s2 = self.butter_bandpass_filter(s2,300,22000,self.rate)
         corr = signal.correlate(s2, s1, mode="full", method="auto")
         zero_lag = len(s1) - 1
-        lag = zero_lag - np.argmax(corr) 
+        lag = np.argmax(corr) - zero_lag
         delay = lag / self.rate
         # Distance difference
         d = delay * self.Vsound
-        ratio = d /self.Dmic
-        # self.get_logger().info(f"ratio: {ratio}")
+        self.get_logger().info(f"np.argmax(corr): {np.argmax(corr):.6f}")
+        ratio = np.clip(d / self.Dmic, -1.0, 1.0)
         theta = np.arccos(ratio) * 180 / np.pi
-        self.get_logger().info(f"theta: {theta}")
+        self.get_logger().info(f"ratio: {ratio:.2f}")
         return theta
 
 
@@ -132,25 +138,40 @@ class KWS(Node):
         if(len(self.audio_chunk) >= self.buffer_size):
             prediction = KWSStamped()
             degree = TDOAStamped()
-            res = self.runner.classify(self.audio_chunk)
+
+            now = time.time()
+
+            if now - self.prev_pred_time < self.debounce_sec:
+                return
+
+            res = self.runner.classify(self.audio_16k)
             confidence = res['result']['classification']
             score = max(confidence.values())
             label = max(confidence, key=confidence.get)
-            # score = confidence[label]
-            # print(label)
-            # print(score)
-            # print(confidence)
+
             if (score < 0.60):
                 label = 'unknown'
             
             if(label != 'unkwon' and label !='noise'):
                 degree.degree = self.get_degree(self.left_chunk,self.right_chunk)
-                # self.get_logger().info(f"KWS result → label: '{label}', confidence: {score:.2f}")
+                self.get_logger().info(f"degree{degree}")
+                self.get_logger().info(f"KWS result → label: '{label}', confidence: {score:.2f}")
+
+            if label in ['unknown', 'noise']:
+                return
+
+            self.prev_pred_time = now
+
             prediction.prediction.confidence = score
             prediction.prediction.label = label
+
             print(prediction)
             self.publisher_.publish(prediction)
+
             self.publisher_TDOA_.publish(degree)
+
+
+
 
 def main(args=None):
     rclpy.init(args=args)

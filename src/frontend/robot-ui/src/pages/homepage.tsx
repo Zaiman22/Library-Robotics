@@ -1,68 +1,98 @@
-import { useState } from "react";
-import { Link } from "react-router";
-import ros from "../ros/ros"
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import ros, { uiKWSInput } from "../ros/ros"
 import * as ROSLIB from "roslib";
 
-
-// First, we create a Topic object with details of the topic's name and message type.
-var cmdVel = new ROSLIB.Topic({
-  ros: ros,
-  name: "/cmd_vel",
-  messageType: "geometry_msgs/Twist",
-});
-
-// Then we create the payload to be published. The object we pass in to ros.Message matches the
-// fields defined in the geometry_msgs/Twist.msg definition.
-var twist = {
-  linear: {
-    x: 0.1,
-    y: 0.2,
-    z: 0.3,
-  },
-  angular: {
-    x: -0.1,
-    y: -0.2,
-    z: -0.3,
-  },
-};
-
-
-
 export default function HomePage() {
+  const navigate = useNavigate();
 
 
-  const welcome = () => {
+  useEffect(() => {
+    if (!uiKWSInput) return;
 
-    function StartClick() {
-      console.log("Pindah")
-      // And finally, publish.
-      cmdVel.publish(twist);
-    }
+    let timeout: ReturnType<typeof setTimeout> | null = null;
 
-    return (
+    const callback = (msg: any) => {
+      console.log("Received message on /ui/kws:", msg);
+
+      setOpen(true);
+      if (msg.data = "robobook") {
+        timeout = setTimeout(() => {
+          navigate("/select");
+        }, 900);
+      }
+
+    };
+
+    uiKWSInput.subscribe(callback);
+
+    return () => {
+      uiKWSInput.unsubscribe(callback);
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [uiKWSInput, navigate]);
+  const [open, setOpen] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [debounce, setDebounce] = useState(0); // debounce for kws
+
+  const lockoutSeconds = 3;
+
+
+  // countdown
+  useEffect(() => {
+    if (!open) return;
+
+    setCountdown(lockoutSeconds);
+
+    const interval = setInterval(() => {
+      setCountdown((c) => c - 1);
+      console.log(interval)
+    }, 1000);
+
+    const timeout = setTimeout(() => {
+      setOpen(false);       // close gate
+      setCountdown(0);
+    }, lockoutSeconds * 1000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [open]);
+
+  return (
+    <div className="relative min-w-screen min-h-screen overflow-hidden bg-[#3db8dd] select-none">
+
+      {/* LEFT GATE */}
+      <div
+        className={`
+          absolute z-10 top-0 left-0 w-1/2 h-full bg-[#067598]
+          transition-transform duration-700 ease-in-out
+          ${open ? "-translate-x-full" : "translate-x-0"}
+        `}
+        onClick={() => setOpen(true)}
+      />
+
+      {/* RIGHT GATE */}
+      <div
+        className={`
+          absolute z-10 top-0 right-0 w-1/2 h-full bg-[#067598]
+          transition-transform duration-700 ease-in-out
+          ${open ? "translate-x-full" : "translate-x-0"}
+        `}
+        onClick={() => setOpen(true)}
+      />
+
+      {/* CENTER CONTENT */}
       <Link to="/select">
-        <div className="min-w-screen min-h-screen flex justify-center items-center text-center bg-[#3db8dd] select-none" onClick={StartClick}>
-          <div className="text-8xl bg-white aspect-square rounded-full flex flex-col justify-center items-center animate-wiggle">
-            <span className="text-[#067598]"> Pangil aku</span>
+        <div
+          className="relative z-1 min-h-screen flex justify-center items-center text-center">
+          <div className="text-8xl bg-white aspect-square rounded-full flex flex-col justify-center items-center animate-wiggle cursor-pointer">
+            <span className="text-[#067598]">Panggil aku</span>
             <span className="text-[#3db8dd]">"RoboBook"</span>
           </div>
         </div>
       </Link>
-    );
-  };
-
-
-
-
-  return (
-    <>
-      {welcome()}
-    </>
+    </div>
   );
 }
-
-
-
-
-
-
