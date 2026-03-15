@@ -17,7 +17,7 @@ services:
     group_add:
     - audio
     - "44"
-    - video
+    # - video
     environment:
       - PULSE_SERVER=unix:/run/user/1000/pulse/native
       - DISPLAY=${DISPLAY}

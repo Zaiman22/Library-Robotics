@@ -38,5 +38,10 @@ export const uiKWSInput = new ROSLIB.Topic({
   messageType: "std_msgs/String",
 });
 
+export const POIState = new ROSLIB.Topic({
+  ros,
+  name: "/POI/existance",
+  messageType: "person_of_interest_msgs/msg/PersonOfInterestState",
+});
 
 export default ros;

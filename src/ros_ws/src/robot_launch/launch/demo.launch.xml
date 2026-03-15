@@ -16,4 +16,9 @@
         output="screen">
         <param name="port" value="9090"/>
     </node>
+
+
+     <include file="$(find-pkg-share astra_camera)/launch/astra_pro.launch.xml" />
+    <node pkg="video_movenet" exec="movenet" />
+
 </launch>

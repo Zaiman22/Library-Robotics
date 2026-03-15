@@ -17,8 +17,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     portaudio19-dev \
     libgl1 \
     curl \
+    nlohmann-json3-dev \
     iproute2 \
     sudo \
+    libgoogle-glog-dev \
     ros-humble-rosbridge-suite \
     ros-humble-ament-cmake-clang-format \
     ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros gazebo libgazebo-dev \
@@ -30,6 +32,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # react dependencies
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
     apt-get install -y nodejs
+
+# Install libuvc
+RUN git clone https://github.com/libuvc/libuvc.git /tmp/libuvc && \
+    cd /tmp/libuvc && \
+    mkdir build && cd build && \
+    cmake .. && \
+    make -j$(nproc) && \
+    make install && \
+    ldconfig && \
+    rm -rf /tmp/libuvc
 
 
 # Create user

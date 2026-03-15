@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import ros, { uiKWSInput } from "../ros/ros"
+import ros, { uiKWSInput, POIState } from "../ros/ros"
 import * as ROSLIB from "roslib";
 
 export default function HomePage() {
@@ -12,25 +12,49 @@ export default function HomePage() {
 
     let timeout: ReturnType<typeof setTimeout> | null = null;
 
-    const callback = (msg: any) => {
+    // KWS callback
+    const kwsCallback = (msg: any) => {
       console.log("Received message on /ui/kws:", msg);
 
       setOpen(true);
-      if (msg.data = "robobook") {
+
+      if (msg.data === "robobook") {
         timeout = setTimeout(() => {
           navigate("/select");
         }, 900);
       }
-
     };
 
-    uiKWSInput.subscribe(callback);
+    uiKWSInput.subscribe(kwsCallback);
 
+    // POI callback
+    const poiCallback = (msg: any) => {
+      console.log("POI state:", msg);
+
+      if (msg.exsistance == true) {
+        console.log("Person of interest detected");
+        setOpen(true);
+      } else {
+        console.log("No person detected");
+      }
+    };
+
+    POIState.subscribe(poiCallback);
+
+    // Cleanup when component unmounts
     return () => {
-      uiKWSInput.unsubscribe(callback);
-      if (timeout) clearTimeout(timeout);
+      uiKWSInput.unsubscribe(kwsCallback);
+      POIState.unsubscribe(poiCallback);
+
+      if (timeout) {
+        clearTimeout(timeout);
+      }
     };
-  }, [uiKWSInput, navigate]);
+  }, [uiKWSInput]);
+
+
+
+
   const [open, setOpen] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [debounce, setDebounce] = useState(0); // debounce for kws

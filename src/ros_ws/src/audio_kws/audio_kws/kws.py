@@ -67,6 +67,10 @@ class KWS(Node):
         self.prev_pred_time = time.time()
         self.debounce_sec = 1.2   # seconds (adjust)
 
+        self.declare_parameter("logging", False)
+        self.logging = self.get_parameter("logging").value
+
+
 
 
 
@@ -127,10 +131,11 @@ class KWS(Node):
         delay = lag / self.rate
         # Distance difference
         d = delay * self.Vsound
-        self.get_logger().info(f"np.argmax(corr): {np.argmax(corr):.6f}")
         ratio = np.clip(d / self.Dmic, -1.0, 1.0)
         theta = np.arccos(ratio) * 180 / np.pi
-        self.get_logger().info(f"ratio: {ratio:.2f}")
+        if (self.logging):
+            self.get_logger().info(f"np.argmax(corr): {np.argmax(corr):.6f}")
+            self.get_logger().info(f"ratio: {ratio:.2f}")
         return theta
 
 
@@ -154,8 +159,9 @@ class KWS(Node):
             
             if(label != 'unkwon' and label !='noise'):
                 degree.degree = self.get_degree(self.left_chunk,self.right_chunk)
-                self.get_logger().info(f"degree{degree}")
-                self.get_logger().info(f"KWS result → label: '{label}', confidence: {score:.2f}")
+                if(self.logging):
+                    self.get_logger().info(f"degree{degree}")
+                    self.get_logger().info(f"KWS result → label: '{label}', confidence: {score:.2f}")
 
             if label in ['unknown', 'noise']:
                 return
@@ -165,7 +171,7 @@ class KWS(Node):
             prediction.prediction.confidence = score
             prediction.prediction.label = label
 
-            print(prediction)
+            # print(prediction)
             self.publisher_.publish(prediction)
 
             self.publisher_TDOA_.publish(degree)
