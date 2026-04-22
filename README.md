@@ -36,7 +36,7 @@ This repo focuses on the high level programming which mainly used for user/actor
 
 ## System Integration
 
-This system uses the ROS2 environment to comunicate between node and thread optimization.
+This system uses the ROS2 environment to communicate between node and thread optimization.
 
 ### Listening
 
@@ -52,7 +52,12 @@ Thus the target in this section are:
   - [indonesian-whisperer](https://github.com/cahya-wirawan/indonesian-whisperer)
   - [Open AI Whisper](https://github.com/openai/whisper)
 
-### Vision (*)
+
+```bash
+/src/ws/src/ros_ws/src/audio_*　# for all audio related nodes and algorithm
+```  
+
+### Vision
 
 This feature has to be able to find the presence of the user/actor and detect actor gesture.
 
@@ -61,12 +66,27 @@ Thus the target in this section are:
 - Pose estimation using Movenet
 - User/actor depth estimation
 
+This feature is included in the ros WS in the following directory:
+
+```bash
+/src/ws/src/ros_ws/src/video_*　# for all video related nodes and algorithm
+/src/ws/src/ros_ws/src/astra_* # for depth camera related nodes and driver
+/src/ws/src/ros_ws/src/person_of_interest_msgs # person of interest (POI) ros msgs
+```
+
 ### User information center
 
-directory
-s
+
 This feature has to be able to give information about the book,find/recomend the user about a book, retain information about the user, and have a fun experience.
 
+This feature are inside the following directory:
+
+```bash
+/src/backend # for API and static file
+/src/frontend/robot-ui # for React UI inside the robot (ROS integrated)
+/src/frontend/librarian-ui # for Librarian UI ->librain control center
+# The databases center container
+```
 
 ### Installation
 
