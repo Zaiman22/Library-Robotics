@@ -69,8 +69,9 @@ export default function AudiobookPlayer() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
-      
+    <div className="min-h-screen bg-brand p-10 flex justify-center">
+    <div className="max-w-3xl w-full space-y-6">
+
       <Card>
         <CardContent className="p-6 space-y-6">
 
@@ -151,6 +152,7 @@ export default function AudiobookPlayer() {
         </CardContent>
       </Card>
 
+    </div>
     </div>
   )
 }

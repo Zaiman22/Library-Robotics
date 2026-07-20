@@ -8,6 +8,8 @@ import SelectPage from "./pages/selectpage";
 import BookTable from "./pages/book";
 import BookInfo from "./pages/bookInfo";
 import AudiobookPlayer from "./pages/audioBook";
+import LocalizingPage from "./pages/localizing";
+import PianoPage from "./pages/piano";
 
 import "./index.css";
 
@@ -19,6 +21,8 @@ const router = createBrowserRouter([
       { path: "/book", element: <BookTable /> },
       { path: "/book/:id", element: <BookInfo /> },
       { path: "/book/audio", element: <AudiobookPlayer /> },
+      { path: "/localizing", element: <LocalizingPage /> },
+      { path: "/piano", element: <PianoPage /> },
     ],
   },
 ]);

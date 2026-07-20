@@ -125,7 +125,7 @@ export default function BookTable() {
   }, [uiKWSInput, navigate]);
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-[#3db8dd] text-white px-12 pt-20 select-none">
+    <div className="h-screen w-screen overflow-hidden bg-brand text-white px-12 pt-20 select-none">
       {backButton()}
       <SearchBar />
       <div

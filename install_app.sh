@@ -23,11 +23,11 @@ create_src_folder(){
 choose_gpu() {
   >&2 echo "Checking if Nvidia support is enabled for Docker..."
   gpu="false"
-  if dpkg -s nvidia-container-toolkit &>/dev/null; then
-    >&2 echo "The Nvidia container toolkit is installed, GPU support will be enabled."
+  if docker run --rm --gpus all ubuntu nvidia-smi >/dev/null 2>&1; then
     gpu="true"
   else
     >&2 echo "the Nvidia container toolkit is not installed, GPU support will be disabled."
+    gpu="false"
   fi
 
   echo $gpu

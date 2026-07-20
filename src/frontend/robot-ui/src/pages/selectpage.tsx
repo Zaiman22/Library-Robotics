@@ -34,13 +34,13 @@ export default function SelectPage() {
 
   const Navigation = () => {
     return (
-      <div className="bg-[#3db8dd] min-w-screen min-h-screen p-10 content-center">
+      <div className="bg-brand min-w-screen min-h-screen p-10 content-center">
         {backButton()}
         <h1 className="text-8xl font-extrabold text-center m-20">
           Apa yang bisa RoboBook bantu?
         </h1>
         <div className="grid grid-cols-2 gap-4 m-5">
-          <NavBox subtitle="Aku mau BERMAIN" />
+          <NavBox subtitle="Aku mau BERMAIN" go_to="/piano" />
           <NavBox subtitle="Saya mau CEK BUKU" go_to="/book"/>
         </div>
       </div>

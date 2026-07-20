@@ -66,14 +66,13 @@ services:
   db:
     image: pgvector/pgvector:pg16
     container_name: library_db
-    user: "${HOST_UID}:${HOST_GID}"
     # change this later for security
     environment:
       POSTGRES_DB: library
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
     volumes:
-      - ./src/postgres_data:/var/lib/postgresql/data
+    - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:

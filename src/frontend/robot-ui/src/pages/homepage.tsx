@@ -85,12 +85,12 @@ export default function HomePage() {
   }, [open]);
 
   return (
-    <div className="relative min-w-screen min-h-screen overflow-hidden bg-[#3db8dd] select-none">
+    <div className="relative min-w-screen min-h-screen overflow-hidden bg-brand select-none">
 
       {/* LEFT GATE */}
       <div
         className={`
-          absolute z-10 top-0 left-0 w-1/2 h-full bg-[#067598]
+          absolute z-10 top-0 left-0 w-1/2 h-full bg-brand-dark
           transition-transform duration-700 ease-in-out
           ${open ? "-translate-x-full" : "translate-x-0"}
         `}
@@ -100,7 +100,7 @@ export default function HomePage() {
       {/* RIGHT GATE */}
       <div
         className={`
-          absolute z-10 top-0 right-0 w-1/2 h-full bg-[#067598]
+          absolute z-10 top-0 right-0 w-1/2 h-full bg-brand-dark
           transition-transform duration-700 ease-in-out
           ${open ? "translate-x-full" : "translate-x-0"}
         `}
@@ -112,8 +112,8 @@ export default function HomePage() {
         <div
           className="relative z-1 min-h-screen flex justify-center items-center text-center">
           <div className="text-8xl bg-white aspect-square rounded-full flex flex-col justify-center items-center animate-wiggle cursor-pointer">
-            <span className="text-[#067598]">Panggil aku</span>
-            <span className="text-[#3db8dd]">"RoboBook"</span>
+            <span className="text-2xl text-brand-dark/70 font-medium">Panggil aku</span>
+            <span className="text-brand-dark font-extrabold">"RoboBook"</span>
           </div>
         </div>
       </Link>

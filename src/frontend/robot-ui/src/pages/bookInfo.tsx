@@ -40,7 +40,7 @@ export default function BookInfo() {
     const NavBox = ({ subtitle, go_to }: NavBoxProps) => {
         return (
             <Link to={go_to}>
-                <div className=" p-10 text-center text-xl px-3 py-1  bg-blue-100 rounded-full">
+                <div className="p-10 text-center text-xl px-3 py-1 bg-brand/15 text-brand-dark rounded-full">
                     <h2>{subtitle}</h2>
                 </div>
             </Link>
@@ -48,7 +48,7 @@ export default function BookInfo() {
     };
 
     return (
-        <div className="min-h-screen bg-[#3db8dd] p-10 flex justify-center">
+        <div className="min-h-screen bg-brand p-10 flex justify-center">
             <BackButton />
             <Card className="max-w-4xl w-full p-8">
 
@@ -75,7 +75,7 @@ export default function BookInfo() {
                             {book.categories?.map((cat) => (
                                 <span
                                     key={cat}
-                                    className="px-3 py-1 text-xs bg-gray-200 rounded-full"
+                                    className="px-3 py-1 text-xs bg-brand-dark/10 text-brand-dark rounded-full"
                                 >
                                     {cat}
                                 </span>

@@ -33,7 +33,7 @@ export default function SearchBar() {
             <Button
                 variant="outline"
                 onClick={handleMicClick}
-                className="p-2 text-black hover:bg-blue-500 hover:text-white hover:scale-105 transition-all duration-200"
+                className="p-2 text-black hover:bg-brand-dark hover:text-white hover:scale-105 transition-all duration-200"
             >
                 <LucideMic className="w-5 h-5" />
             </Button>

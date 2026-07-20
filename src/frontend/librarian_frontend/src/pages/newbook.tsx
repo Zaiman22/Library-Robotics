@@ -149,6 +149,7 @@ export default function NewBookPage() {
 
         const res = await fetch("http://localhost:8000/manage/book/create_book_type", {
             method: "POST",
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             body: form
         })
 
@@ -168,6 +169,7 @@ export default function NewBookPage() {
         try {
             const res = await fetch("http://localhost:8000/manage/book/create_minor_tag", {
                 method: "POST",
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 body: form
             })
 
@@ -196,6 +198,7 @@ export default function NewBookPage() {
         try {
             const res = await fetch("http://localhost:8000/manage/book/create_major_tag", {
                 method: "POST",
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 body: form
             })
 

@@ -16,7 +16,7 @@ from app.models.user import User, UserCreate
 
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.auth import hash_password, verify_password, create_access_token
+from app.auth import hash_password, verify_password, create_access_token, SECRET_KEY, ALGORITHM
 
 
 
@@ -33,20 +33,17 @@ app = FastAPI()
 
 
 
-origins = [
-    "http://localhost:3000",  # Adjust the port if your frontend runs on a different one
-    "http://172.19.0.4:5173",
-    "http://172.19.0.5:5173",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allows all origins from the list
+    allow_origin_regex=r"http://(localhost|172\.\d+\.\d+\.\d+)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
 
+
+from app.routers.auth_router import router as auth_router
+app.include_router(auth_router)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -239,7 +236,8 @@ async def create_book_type(
     short_description: str = Form(...),
     categories: str = Form(...),  # JSON string
     image: UploadFile = File(...),
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    _: dict = Depends(verify_token)
 ):
     print("uploaded")
     # sanitize title and author
@@ -298,7 +296,8 @@ async def create_book_type(
 @app.post("/manage/book/create_major_tag")
 async def create_major_tag(
     name: str = Form(...),
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    _: dict = Depends(verify_token)
 ):
 
     # Create book
@@ -320,7 +319,8 @@ async def create_major_tag(
 async def create_minor_tag(
     name: str = Form(...),
     major_tag: int = Form(...),
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    _: dict = Depends(verify_token)
 ):
 
 
